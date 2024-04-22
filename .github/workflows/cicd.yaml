@@ -1,0 +1,23 @@
+name: .NET CI/CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.01'
+      - name: Build and test
+        run: |
+          dotnet build -c Release
+          dotnet test
+      - name: Publish
+        run: |
+          dotnet publish -c Release -o ./bin/Release/net8.0/publish/PartsUnlimited/
